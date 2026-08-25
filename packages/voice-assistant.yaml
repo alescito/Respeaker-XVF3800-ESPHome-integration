@@ -151,19 +151,45 @@ media_player:
           decibel_reduction: 20
           duration: 0.0s
     on_state:
-      if:
-        condition:
-          and:
-            - switch.is_off: timer_ringing
-            - not:
-                voice_assistant.is_running:
-            - not:
-                media_player.is_announcing: external_media_player
-        then:
-          - mixer_speaker.apply_ducking:
-              id: media_mixing_input
-              decibel_reduction: 0
-              duration: 1.0s
+      # Cuando empieza a anunciar, poner fase reply y actualizar LEDs
+      - if:
+          condition:
+            media_player.is_announcing:
+              id: external_media_player
+          then:
+            - lambda: id(voice_assistant_phase) = ${voice_assist_replying_phase_id};
+            - script.execute: control_leds
+            - script.execute: control_anillo_45_por_fase
+
+      # Cuando termina de anunciar, poner idle
+      - if:
+          condition:
+            and:
+              - switch.is_off: timer_ringing
+              - not:
+                  voice_assistant.is_running:
+              - not:
+                  media_player.is_announcing:
+                    id: external_media_player
+          then:
+            - lambda: id(voice_assistant_phase) = ${voice_assist_idle_phase_id};
+            - script.execute: control_leds
+            - script.execute: control_anillo_45_por_fase
+
+      # Ducking cuando termina
+      - if:
+          condition:
+            and:
+              - switch.is_off: timer_ringing
+              - not:
+                  voice_assistant.is_running:
+              - not:
+                  media_player.is_announcing: external_media_player
+          then:
+            - mixer_speaker.apply_ducking:
+                id: media_mixing_input
+                decibel_reduction: 0
+                duration: 1.0s
 
 micro_wake_word:
   id: mww
