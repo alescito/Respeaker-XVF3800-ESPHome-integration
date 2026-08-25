@@ -20,7 +20,7 @@ substitutions:
   factory_reset_initiated_sound_file: https://github.com/esphome/home-assistant-voice-pe/raw/dev/sounds/factory_reset_initiated.mp3
   factory_reset_cancelled_sound_file: https://github.com/esphome/home-assistant-voice-pe/raw/dev/sounds/factory_reset_cancelled.mp3
   factory_reset_confirmed_sound_file: https://github.com/esphome/home-assistant-voice-pe/raw/dev/sounds/factory_reset_confirmed.mp3
-  error_cloud_expired_sound_file: https://github.com/esphome/home-assistant-voice-pe/raw/dev/sounds/error_cloud_expired.mp3
+  error_cloud_expired_sound_file: https://g            lambda: 'return id(voice_assistant_ithub.com/esphome/home-assistant-voice-pe/raw/dev/sounds/error_cloud_expired.mp3
 
 switch:
   # Mute Sound Switch.
@@ -271,7 +271,7 @@ voice_assistant:
     - script.execute: control_anillo_45_por_fase
   on_error:
     # Only set the error phase if the error code is different than duplicate_wake_up_detected or stt-no-text-recognized
-    # These two are ignored for a better user experience
+    # These two are ignored for a better us            lambda: 'return id(voice_assistant_er experience
     - if:
         condition:
           and:
@@ -574,6 +574,7 @@ script:
                 red: 100%
                 green: 0%
                 blue: 0%
+                effect: "Pulse"
 
       # Timer (7) → amarillo
       - if:
