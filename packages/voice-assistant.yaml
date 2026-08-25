@@ -574,7 +574,9 @@ script:
                 red: 100%
                 green: 0%
                 blue: 0%
-                effect: "Pulse"
+            - delay: 5s
+            - light.turn_off:
+                id: light_esp32_rmt_led_strip_1
 
       # Timer (7) → amarillo
       - if:
