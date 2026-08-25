@@ -574,9 +574,12 @@ script:
             - light.turn_on:
                 id: light_esp32_rmt_led_strip_1
                 brightness: 100%
-                red: 0%
+                red: 100%
                 green: 0%
-                blue: 100%
+                blue: 0%
+            - delay: 5s
+            # Después de 5s, reevaluar la fase actual
+            - script.execute: control_anillo_45_por_fase
 
       # Timer (7) → amarillo
       - if:
