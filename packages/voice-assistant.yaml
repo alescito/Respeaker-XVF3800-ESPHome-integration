@@ -578,8 +578,8 @@ script:
                 green: 0%
                 blue: 0%
             - delay: 5s
-            # Después de 5s, reevaluar la fase actual
-            - script.execute: control_anillo_45_por_fase
+            - light.turn_off:
+                id: light_esp32_rmt_led_strip_1
 
       # Timer (7) → amarillo
       - if:
