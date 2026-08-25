@@ -369,7 +369,7 @@ voice_assistant:
         id: send_stt_text_event
         stt_text: !lambda 'return x;'
 
-  # When the voice assistant ends ...
+   # When the voice assistant ends ...
   on_end:
     # Safety-net unlock: covers paths where on_stt_vad_end never fired
     # (pipeline error mid-capture, abort, etc.). Idempotent.
@@ -389,9 +389,9 @@ voice_assistant:
         then:
           - delay: 1s
     # Reset the voice assistant phase id and reset the LED animations.
-     - lambda: id(voice_assistant_phase) = ${voice_assist_idle_phase_id};
-     - script.execute: control_leds
-     - script.execute: control_anillo_45_por_fase
+    - lambda: id(voice_assistant_phase) = ${voice_assist_idle_phase_id};
+    - script.execute: control_leds
+    - script.execute: control_anillo_45_por_fase
   on_timer_finished:
     - switch.turn_on: timer_ringing
     - lambda: |
