@@ -17,7 +17,9 @@ substitutions:
           min_brightness: 0%
           max_brightness: 100%e-pe/raw/dev/sounds/mute_switch_on.flac
   mute_switch_off_sound_file: https://github.com/esphome/home-assistant-voice-pe/raw/dev/sounds/mute_switch_off.flac
-  timer_finished_sound_file: https://github.com/esphome/home-assistant-voice-pe/raw/dev/sounds/timer_finished.flac
+  timer_finished_sound_file: https://github.com/esphome/home-assistant-v            - delay: 5s
+            - light.turn_off:
+                id: light_esp32_rmt_led_strip_1oice-pe/raw/dev/sounds/timer_finished.flac
   wake_word_triggered_sound_file: https://github.com/esphome/home-assistant-voice-pe/raw/dev/sounds/wake_word_triggered.flac
   center_button_press_sound_file: https://github.com/esphome/home-assistant-voice-pe/raw/dev/sounds/center_button_press.flac
   center_button_double_press_sound_file: https://github.com/esphome/home-assistant-voice-pe/raw/dev/sounds/center_button_double_press.flac
@@ -583,9 +585,6 @@ script:
                 red: 0%
                 green: 0%
                 blue: 100%
-            - delay: 5s
-            - light.turn_off:
-                id: light_esp32_rmt_led_strip_1
 
       # Timer (7) → amarillo
       - if:
