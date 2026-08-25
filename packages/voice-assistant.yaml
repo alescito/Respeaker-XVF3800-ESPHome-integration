@@ -9,7 +9,13 @@
 
 substitutions:
   # Substitutions for audio files
-  mute_switch_on_sound_file: https://github.com/esphome/home-assistant-voice-pe/raw/dev/sounds/mute_switch_on.flac
+  mute_switch_on_sound_file: https://github.com/esphome/home-assistant-voiceffects:
+      - pulse:
+          name: "Pulse"
+          transition_length: 0.5s
+          update_interval: 0.5s
+          min_brightness: 0%
+          max_brightness: 100%e-pe/raw/dev/sounds/mute_switch_on.flac
   mute_switch_off_sound_file: https://github.com/esphome/home-assistant-voice-pe/raw/dev/sounds/mute_switch_off.flac
   timer_finished_sound_file: https://github.com/esphome/home-assistant-voice-pe/raw/dev/sounds/timer_finished.flac
   wake_word_triggered_sound_file: https://github.com/esphome/home-assistant-voice-pe/raw/dev/sounds/wake_word_triggered.flac
@@ -573,7 +579,7 @@ script:
                 brightness: 100%
                 red: 100%
                 green: 0%
-                blue: 0%
+                blue: 100%
             - delay: 5s
             - light.turn_off:
                 id: light_esp32_rmt_led_strip_1
