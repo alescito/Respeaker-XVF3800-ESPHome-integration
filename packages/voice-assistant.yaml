@@ -263,10 +263,12 @@ voice_assistant:
     - micro_wake_word.start:
     - lambda: id(voice_assistant_phase) = ${voice_assist_idle_phase_id};
     - script.execute: control_leds
+    - script.execute: control_anillo_45_por_fase
   on_client_disconnected:
     - voice_assistant.stop:
     - lambda: id(voice_assistant_phase) = ${voice_assist_not_ready_phase_id};
     - script.execute: control_leds
+    - script.execute: control_anillo_45_por_fase
   on_error:
     # Only set the error phase if the error code is different than duplicate_wake_up_detected or stt-no-text-recognized
     # These two are ignored for a better user experience
@@ -279,6 +281,7 @@ voice_assistant:
         then:
           - lambda: id(voice_assistant_phase) = ${voice_assist_error_phase_id};
           - script.execute: control_leds
+          - script.execute: control_anillo_45_por_fase
     # If the error code is cloud-auth-failed, serve a local audio file guiding the user.
     - if:
         condition:
@@ -297,15 +300,18 @@ voice_assistant:
   on_listening:
     - lambda: id(voice_assistant_phase) = ${voice_assist_waiting_for_command_phase_id};
     - script.execute: control_leds
+    - script.execute: control_anillo_45_por_fase
   on_stt_vad_start:
     - lambda: id(voice_assistant_phase) = ${voice_assist_listening_for_command_phase_id};
     - script.execute: control_leds
+    - script.execute: control_anillo_45_por_fase
   on_stt_vad_end:
     - lambda: id(voice_assistant_phase) = ${voice_assist_thinking_phase_id};
     # Release the beam as soon as command capture is over, so the stop-word
     # detector can still hear the user from anywhere in the room during TTS.
     - lambda: id(respeaker).unlock_beam();
     - script.execute: control_leds
+    - script.execute: control_anillo_45_por_fase
   on_intent_progress:
     - if:
         condition:
@@ -314,6 +320,7 @@ voice_assistant:
         then:
           - lambda: id(voice_assistant_phase) = ${voice_assist_replying_phase_id};
           - script.execute: control_leds
+          - script.execute: control_anillo_45_por_fase
           # Start a script that would potentially enable the stop word if the response is longer than a second
           - script.execute: activate_stop_word_once
   on_tts_start:
@@ -324,6 +331,7 @@ voice_assistant:
         then:
           - lambda: id(voice_assistant_phase) = ${voice_assist_replying_phase_id};
           - script.execute: control_leds
+          - script.execute: control_anillo_45_por_fase
           # Start a script that would potentially enable the stop word if the response is longer than a second
           - script.execute: activate_stop_word_once
   on_tts_end:
@@ -357,6 +365,7 @@ voice_assistant:
     # Reset the voice assistant phase id and reset the LED animations.
     - lambda: id(voice_assistant_phase) = ${voice_assist_idle_phase_id};
     - script.execute: control_leds
+    - script.execute: control_anillo_45_por_fase
   on_timer_finished:
     - switch.turn_on: timer_ringing
     - lambda: |
@@ -371,6 +380,7 @@ voice_assistant:
           id(next_timer_name).publish_state(id(first_active_timer).name);
         }
     - script.execute: control_leds
+    - script.execute: control_anillo_45_por_fase
   on_timer_cancelled:
     - lambda: |
         id(check_if_timers_active).execute();
@@ -383,6 +393,7 @@ voice_assistant:
           id(next_timer_name).publish_state("-");
         }
     - script.execute: control_leds
+    - script.execute: control_anillo_45_por_fase
   on_timer_updated:
     - lambda: |
         id(check_if_timers_active).execute();
@@ -392,6 +403,7 @@ voice_assistant:
           id(next_timer_name).publish_state(id(first_active_timer).name);
         }
     - script.execute: control_leds
+    - script.execute: control_anillo_45_por_fase
   on_timer_tick:
     # Reduce LED updates - only every 5 seconds instead of every second
     - lambda: |
