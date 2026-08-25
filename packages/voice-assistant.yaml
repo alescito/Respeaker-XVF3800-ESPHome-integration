@@ -574,6 +574,9 @@ script:
           condition:
             lambda: 'return id(voice_assistant_phase) == ${voice_assist_error_phase_id};'
           then:
+            - logger.log:
+                level: WARN
+                format: "Fase ERROR detectada, enciendo rojo 5s"
             - light.turn_on:
                 id: light_esp32_rmt_led_strip_1
                 brightness: 100%
