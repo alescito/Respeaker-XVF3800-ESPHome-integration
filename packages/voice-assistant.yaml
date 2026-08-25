@@ -499,13 +499,27 @@ script:
 
   - id: control_anillo_45_por_fase
     then:
-      # Idle (1) → apagado
+           # Idle (1) → apagado (pero si está anunciando, mantener cian)
       - if:
           condition:
             lambda: 'return id(voice_assistant_phase) == ${voice_assist_idle_phase_id};'
           then:
-            - light.turn_off:
-                id: light_esp32_rmt_led_strip_1
+            - if:
+                condition:
+                  media_player.is_announcing:
+                    id: external_media_player
+                then:
+                  # Mantener cian mientras reproduce
+                  - light.turn_on:
+                      id: light_esp32_rmt_led_strip_1
+                      brightness: 80%
+                      red: 0%
+                      green: 80%
+                      blue: 100%
+                else:
+                  # Apagar si no está reproduciendo
+                  - light.turn_off:
+                      id: light_esp32_rmt_led_strip_1
 
       # Not Ready (10) → apagado
       - if:
