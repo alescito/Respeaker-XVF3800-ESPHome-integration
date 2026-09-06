@@ -103,7 +103,8 @@ media_source:
   - platform: sendspin
     id: sendspin_media_source
     fixed_delay: 480 microseconds  # The AIC3204 DAC used, as configured, on the VPE delays audio by 480 microseconds
-
+    initial_static_delay: 0ms
+    static_delay_adjustable: true
 media_player:
   - platform: sendspin
     id: sendspin_group_media_player
